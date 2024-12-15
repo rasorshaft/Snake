@@ -8,7 +8,7 @@ SPACE_SIZE = 25
 BODY_PARTS = 3
 SNAKE_COLOR = "#0000FF"
 FOOD_COLOR = "#FF0000"
-BACKGROUND_COLOR = "#B2FBA5"
+BACKGROUND_COLOR = "#000000"
 
 class Snake:
     def __init__(self):
@@ -50,7 +50,7 @@ def next_turn(snake, food):
     if x == food.coordinates[0] and y == food.coordinates[1]:
         global score
         score += 1
-        label.config(text="Score: {}".format(score))
+        label.config(text="Aura: +{}".format(score))
         canvas.delete("food")
         food = Food()
     else:
@@ -78,7 +78,6 @@ def check_collisions(snake):
     x, y = snake.coordinates[0]
     if x < 0 or x >= GAME_WIDTH or y < 0 or y >= GAME_HEIGHT:
         return True
-    
     for body_part in snake.coordinates[1:]:
         if x == body_part[0] and y == body_part[1]:
             return True
@@ -88,7 +87,7 @@ def check_collisions(snake):
 def game_over():
     canvas.delete(ALL)
     canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2,
-                       font=('consolas', 70), text="GAME OVER", fill="red", tag="gameover")
+                       font=('comic sans ms', 70), text="no bitches :(", fill="red", tag="gameover")
 
 window = Tk()
 window.title("Snake but More Fun")
@@ -97,7 +96,7 @@ window.resizable(False, False)
 score = 0
 direction = 'down'
 
-label = Label(window, text="Score: {}".format(score), font=('consolas', 40))
+label = Label(window, text="Aura: {}".format(score), font=('courier new', 40))
 label.pack()
 
 canvas = Canvas(window, bg=BACKGROUND_COLOR, height=GAME_HEIGHT, width=GAME_WIDTH)
