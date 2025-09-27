@@ -50,7 +50,7 @@ def next_turn(snake, food):
     if x == food.coordinates[0] and y == food.coordinates[1]:
         global score
         score += 1
-        label.config(text="Aura: +{}".format(score))
+        label.config(text="Score: +{}".format(score))
         canvas.delete("food")
         food = Food()
     else:
@@ -86,8 +86,31 @@ def check_collisions(snake):
 
 def game_over():
     canvas.delete(ALL)
-    canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2,
+    canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2 - 70,
                        font=('comic sans ms', 70), text="Game Over :(", fill="red", tag="gameover")
+    
+    restart_button = Button(window, text="Restart", font=('courier new', 30), command=restart_game)
+    restart_button.place(x=GAME_WIDTH/2 - 70, y=GAME_HEIGHT/2 + 30)
+
+
+def restart_game():
+    global snake, food, score, direction
+
+    score = 0
+    direction = "down"
+    label.config(text="Score: {}".format(score))
+
+    canvas.delete(ALL)
+
+    for widget in window.winfo_children():
+        if isinstance(widget, Button) and widget.cget("text") == "Restart":
+            widget.destroy()
+
+    snake = Snake()
+    food = Food()
+
+    next_turn(snake, food)
+
 
 window = Tk()
 window.title("Snake but More Fun")
